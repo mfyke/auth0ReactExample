@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <HashRouter>
+        <HashRouter basename="/">
           <Switch>
             <Route path="/secret" render={()=> this.state.auth.isAuthenticated() ? <Secret auth={this.state.auth} name={this.state.name} /> : <Error/>} />
             <Route path="/" render={() => <Main auth={this.state.auth} name={this.state.name} />} exact />
