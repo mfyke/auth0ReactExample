@@ -8,7 +8,7 @@ export default class Auth {
     auth0 = new auth0.WebAuth({
         domain: "dev-liwu6bl3.auth0.com",
         clientID: "Zx337it6952CiporJWaG06qCLx7hJeym",
-        redirectUri: "http://localhost:3000/callback",
+        redirectUri: `${window.location.href}callback`,
         audience: "https://dev-liwu6bl3.auth0.com/userinfo",
         responseType: "token id_token",
         scope: "openid profile"
