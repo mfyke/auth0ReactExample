@@ -8,11 +8,13 @@ import Auth from './Auth';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 const auth = new Auth();
+let username = auth.getProfile().given_name || "User";
 
 class App extends Component {
 
   state = {
-    auth: auth
+    auth: auth,
+    name: username
   };
   
   render() {
@@ -20,8 +22,8 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route path="/secret" render={()=> this.state.auth.isAuthenticated() ? <Secret auth={this.state.auth} /> : <Error/>} />
-            <Route path="/" render={() => <Main auth={this.state.auth} />} exact />
+            <Route path="/secret" render={()=> this.state.auth.isAuthenticated() ? <Secret auth={this.state.auth} name={this.state.name} /> : <Error/>} />
+            <Route path="/" render={() => <Main auth={this.state.auth} name={this.state.name} />} exact />
             <Route path="/callback" component={Callback} />
             <Route component={Error} default />  
           </Switch>

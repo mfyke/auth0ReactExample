@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js';
+import jwtDecode from 'jwt-decode';
 
 const LOGIN_SUCCESS = "/secret";
 const LOGIN_FAILURE = "/"
@@ -48,5 +49,14 @@ export default class Auth {
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
         window.location.pathname = LOGIN_FAILURE;
+    }
+
+    getProfile() {
+        if(localStorage.getItem("id_token")) {
+            return jwtDecode(localStorage.getItem("id_token"));
+        } else {
+            return {};
+        }
+
     }
 }
