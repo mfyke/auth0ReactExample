@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Main from './components/Main';
+import Secret from './components/Secret';
+import Error from './components/Error';
+import Callback from './components/Callback';
+import Auth from './Auth';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const auth = new Auth();
+
+class App extends Component {
+
+  state = {
+    auth: auth
+  };
+  
+  render() {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <Switch>
+            <Route path="/secret" render={()=> this.state.auth.isAuthenticated() ? <Secret auth={this.state.auth} /> : <Error/>} />
+            <Route path="/" render={() => <Main auth={this.state.auth} />} exact />
+            <Route path="/callback" component={Callback} />
+            <Route component={Error} default />  
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
